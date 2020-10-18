@@ -18,7 +18,7 @@ namespace TODOCore.Repository
             }
 
             string json = File.ReadAllText(filePath);
-            list =json.Length!=0? JsonConvert.DeserializeObject<List<TodoItem>>(json): new List<TodoItem>();
+            list = json.Length != 0 ? JsonConvert.DeserializeObject<List<TodoItem>>(json) : new List<TodoItem>();
             this.filePath = filePath;
         }
 
@@ -37,18 +37,25 @@ namespace TODOCore.Repository
             list.Remove(modifiedItem);
         }
 
-        public void Save(TodoItem modifiedItem)
+        public void Save(TodoItem item)
         {
-            var exisitingItem = GetById(modifiedItem.Id);
+            var exisitingItem = GetById(item.Id);
 
             if (exisitingItem is null)
             {
-                list.Add(modifiedItem);
+                item.Id =
+                    GetAll()
+                    .Select(x => x.Id)
+                    .OrderBy(x => x) 
+                    .DefaultIfEmpty(0)
+                    .Last() + 1;
+
+                list.Add(item);
             }
             else
             {
-                exisitingItem.IsCompleted = modifiedItem.IsCompleted;
-                exisitingItem.Description = modifiedItem.Description;
+                exisitingItem.IsCompleted = item.IsCompleted;
+                exisitingItem.Description = item.Description;
             }
         }
 

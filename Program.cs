@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using TODOCore.Authentication;
-    using TODOCore.Email;
     using TODOCore.Repository;
     using TODOCore.Util;
 
@@ -48,27 +47,21 @@
 
             do
             {
-                Console.WriteLine();
                 IEnumerable<TodoItem> todoItems = todoItemRepository.GetAll();
-                Console.WriteLine($"Listing All {todoItems.Count()} Items:");
-                Console.WriteLine();
+                Console.WriteLine($"\rListing All {todoItems.Count()} Items:\r");
 
                 foreach (TodoItem todoItem in todoItems)
                 {
                     var checker = todoItem.IsCompleted ? "[x]" : "[ ]";
                     Console.WriteLine($"\t{todoItem.Id} {checker} {todoItem.Description}");
                 }
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("Dashboard");
+                Console.WriteLine("\r\rDashboard");
                 Console.WriteLine("q) Add new Item");
                 Console.WriteLine("w) Complete Item");
                 Console.WriteLine("e) Delete Item");
                 Console.WriteLine("r) Delete Completed Items");
-                Console.WriteLine("t) Save Changes");
-                Console.WriteLine("y) Logout and Close");
-                Console.WriteLine();
-                Console.Write("Type Option: ");
+                Console.WriteLine("t) Logout and Close");
+                Console.Write("\rType Option: ");
 
                 selectedOption = Console.ReadKey().KeyChar;
                 try
@@ -79,60 +72,53 @@
                         case 'w': CompleteItem(); break;
                         case 'e': DeleteItem(); break;
                         case 'r': DeleteCompletedItems(); break;
-                        case 't': SaveChanges(); break;
                         default: Console.Clear(); break;
                     }
                 }
                 catch (Exception e)
                 {
+                    Console.Clear();
                     Console.WriteLine(e.Message);
                     logger.Log(e.Message, LoggerLevel.ERROR);
                 }
 
-            } while (selectedOption != 'y');
+            } while (selectedOption != 't');
 
-            logger.Log(string.Format("User '{0}' has logged off", user), LoggerLevel.INFO);
-        }
-
-        private static void SaveChanges()
-        {
-            logger.Log("SaveChanges", LoggerLevel.INFO);
-
-            Console.WriteLine();
-            Console.WriteLine();
             todoItemRepository.Persist();
-            Console.Clear();
-            Console.WriteLine("All items were saved.");
+            logger.Log("SaveChanges", LoggerLevel.INFO);
+            logger.Log(string.Format("User '{0}' has logged off", user), LoggerLevel.INFO);
         }
 
         private static void DeleteCompletedItems()
         {
             logger.Log("DeleteCompletedItems", LoggerLevel.INFO);
 
-            Console.WriteLine();
-            Console.WriteLine();
-            IEnumerable<TodoItem> todoItems = todoItemRepository.GetAll();
+            IEnumerable<TodoItem> todoItems =
+                todoItemRepository
+                    .GetAll()
+                    .Where(x => x.IsCompleted)
+                    .ToList();
 
-            foreach (TodoItem todoItem in todoItems.Where(x => x.IsCompleted))
+            foreach (TodoItem todoItem in todoItems)
             {
                 todoItemRepository.Delete(todoItem);
             }
+
             Console.Clear();
-            Console.WriteLine($"The items were deleted");
+            Console.WriteLine("\r\rThe items were deleted");
         }
 
         private static void DeleteItem()
         {
             logger.Log("DeleteItem", LoggerLevel.INFO);
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write($"What item do you want to delete?: ");
+            Console.Write("\r\rWhat item do you want to delete?: ");
+
             int itemNumber = int.Parse(Console.ReadLine());
             logger.Log($"Selected Item {itemNumber}", LoggerLevel.INFO);
 
             var todoItem = todoItemRepository.GetById(itemNumber);
 
-            if (todoItem == null)
+            if (todoItem is null)
             {
                 throw new Exception("The item do not exists!");
             }
@@ -146,9 +132,7 @@
         private static void CompleteItem()
         {
             logger.Log($"CompleteItem", LoggerLevel.INFO);
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write($"What item number?: ");
+            Console.Write("\r\rWhat item number?: ");
             int itemNumber = int.Parse(Console.ReadLine());
             logger.Log($"Selected Item {itemNumber}", LoggerLevel.INFO);
 
@@ -170,19 +154,16 @@
         private static void AddItem()
         {
             logger.Log($"Adding item", LoggerLevel.INFO);
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write("New Todo item: ");
+            Console.Write("\r\rNew Todo item: ");
 
             string description = Console.ReadLine();
-            int id = todoItemRepository.GetAll().Count() + 1;
 
-            todoItemRepository.Save(new TodoItem(id, description));
+            TodoItem item = new TodoItem(description);
+            todoItemRepository.Save(item);
 
             Console.Clear();
             Console.WriteLine("Item Added!");
-            logger.Log($"Added item {id}: {description}", LoggerLevel.INFO);
+            logger.Log($"Added item {item.Id}: {description}", LoggerLevel.INFO);
         }
     }
 }
-
