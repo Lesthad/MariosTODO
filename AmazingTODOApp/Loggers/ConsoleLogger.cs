@@ -1,6 +1,6 @@
 using System;
 
-namespace MariosTODOApp.Loggers
+namespace AmazingTODOApp.Loggers
 {
     public class ConsoleLogger : ILogger
     {

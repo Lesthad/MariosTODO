@@ -1,4 +1,4 @@
-namespace MariosTODOApp.Loggers
+namespace AmazingTODOApp.Loggers
 {
     public enum LoggerLevel
     {

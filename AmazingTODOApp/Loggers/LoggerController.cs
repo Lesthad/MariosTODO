@@ -1,4 +1,4 @@
-namespace MariosTODOApp.Loggers
+namespace AmazingTODOApp.Loggers
 {
     using System.Collections.Generic;
     

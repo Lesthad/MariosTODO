@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace MariosTODOApp.Loggers
+namespace AmazingTODOApp.Loggers
 {
     public class FileLogger : ILogger
     {

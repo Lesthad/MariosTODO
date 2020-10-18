@@ -1,4 +1,4 @@
-namespace MariosTODOApp.Domain
+namespace AmazingTODOApp.Domain
 {
     public class TodoItem
     {

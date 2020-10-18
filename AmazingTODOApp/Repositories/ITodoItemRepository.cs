@@ -1,7 +1,7 @@
-using MariosTODOApp.Domain;
+using AmazingTODOApp.Domain;
 using System.Collections.Generic;
 
-namespace MariosTODOApp.Repositories
+namespace AmazingTODOApp.Repositories
 {
     public interface ITodoItemRepository
     {

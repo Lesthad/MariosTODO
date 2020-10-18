@@ -1,11 +1,11 @@
-using MariosTODOApp.Domain;
+using AmazingTODOApp.Domain;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Authentication;
 
-namespace MariosTODOApp.Repositories
+namespace AmazingTODOApp.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {

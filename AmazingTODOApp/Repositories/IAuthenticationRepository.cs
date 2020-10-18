@@ -1,6 +1,6 @@
-﻿using MariosTODOApp.Domain;
+﻿using AmazingTODOApp.Domain;
 
-namespace MariosTODOApp.Repositories
+namespace AmazingTODOApp.Repositories
 {
     public interface IAuthenticationRepository
     {
