@@ -7,12 +7,12 @@ namespace AmazingTODOApp.Repositories
     using Domain;
     using System.Security.Authentication;
 
-    public class AmazingTodoRepository : IAmazingTodoRepository
+    public class AmazingTodoFileRepository : IAmazingTodoRepository
     {
         private readonly List<User> users;
         private readonly string filePath;
 
-        public AmazingTodoRepository(string filePath)
+        public AmazingTodoFileRepository(string filePath)
         {
             var json = File.ReadAllText(filePath);
             users = json.Length is 0 ? new List<User>() : JsonConvert.DeserializeObject<List<User>>(json);
