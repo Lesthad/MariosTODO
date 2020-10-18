@@ -8,15 +8,13 @@ namespace AmazingTODOApp
 {
     class Program
     {
-        private static readonly IAuthenticationRepository authenticator;
-        private static readonly ITodoItemRepository todoItemRepository;
+        private static readonly IAmazingTodoRepository amazingTodoRepository;
         private static readonly ILogger logger;
         private static User currentUser;
 
         static Program()
         {
-            authenticator = new AuthenticationFileRepository("authentication_database.json");
-            todoItemRepository = new TodoItemFileRepository("items_database.json");
+            amazingTodoRepository = new AmazingTodoRepository("database.json");
             logger = new FileLogger(LoggerLevel.INFO);
         }
 
@@ -43,7 +41,7 @@ namespace AmazingTODOApp
                     //----------------------------------------------------------- Authenticating user
                     try
                     {
-                        currentUser = authenticator.GetUser(userName, password);
+                        currentUser = amazingTodoRepository.GetUser(userName, password);
                         Console.Clear();
                         logger.Log(string.Format("User '{0}' has logged in", userName), LoggerLevel.INFO);
                     }
@@ -59,7 +57,7 @@ namespace AmazingTODOApp
                 do //----------------------------------------------------------- TODO Main Menu
                 {
                     Console.WriteLine(string.Format("Logged as {0}", currentUser.UserName));
-                    var todoItems = todoItemRepository.GetAllByUser(currentUser.UserId);
+                    var todoItems = amazingTodoRepository.GetTodoItemsByUserId(currentUser.UserId);
                     Console.WriteLine($"\r\n---Listing All {todoItems.Count()} Items:\r\n");
 
                     foreach (TodoItem todoItem in todoItems)
@@ -101,10 +99,10 @@ namespace AmazingTODOApp
                 } while (selectedOption != 't');
 
                 //----------------------------------------------------------- Logging out user
-                todoItemRepository.Persist();
+                amazingTodoRepository.Persist();
                 logger.Log("SaveChanges", LoggerLevel.INFO);
                 logger.Log(string.Format("User '{0}' has logged off", currentUser.UserName), LoggerLevel.INFO);
-                
+
                 currentUser = null;
             }
         }
@@ -114,14 +112,14 @@ namespace AmazingTODOApp
             logger.Log("DeleteCompletedItems", LoggerLevel.INFO);
 
             var todoItems =
-                todoItemRepository
-                    .GetAllByUser(currentUser.UserId)
+                amazingTodoRepository
+                    .GetTodoItemsByUserId(currentUser.UserId)
                     .Where(x => x.IsCompleted && x.UserId == currentUser.UserId)
                     .ToList();
 
             foreach (TodoItem todoItem in todoItems)
             {
-                todoItemRepository.Delete(todoItem);
+                amazingTodoRepository.DeleteTodoItem(todoItem);
             }
 
             Console.Clear();
@@ -136,14 +134,14 @@ namespace AmazingTODOApp
             int itemNumber = int.Parse(Console.ReadLine());
             logger.Log($"Selected Item {itemNumber}", LoggerLevel.INFO);
 
-            var todoItem = todoItemRepository.GetById(itemNumber);
+            var todoItem = amazingTodoRepository.GetTodoItemById(itemNumber);
 
             if (todoItem is null)
             {
                 throw new Exception("The item do not exists!");
             }
 
-            todoItemRepository.Delete(todoItem);
+            amazingTodoRepository.DeleteTodoItem(todoItem);
 
             Console.Clear();
             Console.WriteLine($"The item was deleted");
@@ -154,10 +152,10 @@ namespace AmazingTODOApp
             logger.Log($"CompleteItem", LoggerLevel.INFO);
             Console.Write("\r\n\r\nWhat item number?: ");
             int itemNumber = int.Parse(Console.ReadLine());
-            
+
             logger.Log($"Selected Item {itemNumber}", LoggerLevel.INFO);
 
-            var todoItem = todoItemRepository.GetById(itemNumber);
+            var todoItem = amazingTodoRepository.GetTodoItemById(itemNumber);
 
             if (todoItem is null)
             {
@@ -166,7 +164,7 @@ namespace AmazingTODOApp
 
             todoItem.IsCompleted = true;
 
-            todoItemRepository.Save(todoItem);
+            amazingTodoRepository.SaveTodoItem(todoItem);
 
             Console.Clear();
             Console.WriteLine("The item was completed.");
@@ -180,7 +178,7 @@ namespace AmazingTODOApp
             string description = Console.ReadLine();
 
             var todoItem = new TodoItem(currentUser.UserId, description);
-            todoItemRepository.Save(todoItem);
+            amazingTodoRepository.SaveTodoItem(todoItem);
 
             Console.Clear();
             Console.WriteLine("Item Added!");
