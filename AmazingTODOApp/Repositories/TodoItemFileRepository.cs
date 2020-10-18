@@ -6,12 +6,12 @@ namespace AmazingTODOApp.Repositories
     using System.IO;
     using Domain;
 
-    public class TodoItemRepository : ITodoItemRepository
+    public class TodoItemFileRepository : ITodoItemRepository
     {
         public List<TodoItem> list;
         private readonly string filePath;
 
-        public TodoItemRepository(string filePath)
+        public TodoItemFileRepository(string filePath)
         {
             if (!File.Exists(filePath))
             {

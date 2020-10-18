@@ -15,8 +15,8 @@ namespace AmazingTODOApp
 
         static Program()
         {
-            authenticator = new AuthenticationRepository("authentication_database.json");
-            todoItemRepository = new TodoItemRepository("items_database.json");
+            authenticator = new AuthenticationFileRepository("authentication_database.json");
+            todoItemRepository = new TodoItemFileRepository("items_database.json");
             logger = new FileLogger(LoggerLevel.INFO);
         }
 

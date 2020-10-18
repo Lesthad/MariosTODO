@@ -7,11 +7,11 @@ using System.Security.Authentication;
 
 namespace AmazingTODOApp.Repositories
 {
-    public class AuthenticationRepository : IAuthenticationRepository
+    public class AuthenticationFileRepository : IAuthenticationRepository
     {
         private readonly List<User> list;
 
-        public AuthenticationRepository(string filePath)
+        public AuthenticationFileRepository(string filePath)
         {
             var json = File.ReadAllText(filePath);
             list = json.Length is 0 ? new List<User>() : JsonConvert.DeserializeObject<List<User>>(json);
