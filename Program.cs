@@ -114,7 +114,7 @@
         {
             logger.Log("DeleteCompletedItems", LoggerLevel.INFO);
 
-            IEnumerable<TodoItem> todoItems =
+            var todoItems =
                 todoItemRepository
                     .GetAllByUser(currentUser.UserId)
                     .Where(x => x.IsCompleted && x.UserId == currentUser.UserId)
@@ -155,6 +155,7 @@
             logger.Log($"CompleteItem", LoggerLevel.INFO);
             Console.Write("\r\n\r\nWhat item number?: ");
             int itemNumber = int.Parse(Console.ReadLine());
+            
             logger.Log($"Selected Item {itemNumber}", LoggerLevel.INFO);
 
             var todoItem = todoItemRepository.GetById(itemNumber);
@@ -179,12 +180,12 @@
 
             string description = Console.ReadLine();
 
-            TodoItem item = new TodoItem(currentUser.UserId, description);
-            todoItemRepository.Save(item);
+            var todoItem = new TodoItem(currentUser.UserId, description);
+            todoItemRepository.Save(todoItem);
 
             Console.Clear();
             Console.WriteLine("Item Added!");
-            logger.Log($"Added item {item.TodoItemId}: {description}", LoggerLevel.INFO);
+            logger.Log($"Added item {todoItem.TodoItemId}: {description}", LoggerLevel.INFO);
         }
     }
 }

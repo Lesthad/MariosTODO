@@ -13,7 +13,7 @@ namespace MariosTODOApp.Repositories
 
         public AuthenticationRepository(string filePath)
         {
-            string json = File.ReadAllText(filePath);
+            var json = File.ReadAllText(filePath);
             list = json.Length is 0 ? new List<User>() : JsonConvert.DeserializeObject<List<User>>(json);
         }
 

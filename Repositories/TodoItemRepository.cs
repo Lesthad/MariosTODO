@@ -18,7 +18,7 @@ namespace MariosTODOApp.Repositories
                 File.Create(filePath);
             }
 
-            string json = File.ReadAllText(filePath);
+            var json = File.ReadAllText(filePath);
             list = json.Length == 0 ? new List<TodoItem>() : JsonConvert.DeserializeObject<List<TodoItem>>(json);
             this.filePath = filePath;
         }
@@ -62,7 +62,7 @@ namespace MariosTODOApp.Repositories
 
         public void Persist()
         {
-            string json = JsonConvert.SerializeObject(list);
+            var json = JsonConvert.SerializeObject(list);
             File.WriteAllText(filePath, json);
         }
     }
