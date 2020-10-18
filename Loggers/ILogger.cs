@@ -1,4 +1,4 @@
-namespace TODOCore.Util
+namespace MariosTODOApp.Loggers
 {
     public interface ILogger
     {

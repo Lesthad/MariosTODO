@@ -1,15 +1,26 @@
-namespace TODOCore
+namespace MariosTODOApp.Domain
 {
     public class TodoItem
     {
-        public int Id { get; set; }
+        public int TodoItemId { get; set; }
+        public string UserId { get; set; }
         public string Description { get; set; }
         public bool IsCompleted { get; set; }
 
-        public TodoItem(string description)
+        public TodoItem()
         {
+            UserId = string.Empty;
+            Description = string.Empty;
+            IsCompleted = false;
+        }
+
+        public TodoItem(string userId, string description)
+        {
+            UserId = userId;
             Description = description;
             IsCompleted = false;
         }
+
+
     }
 }

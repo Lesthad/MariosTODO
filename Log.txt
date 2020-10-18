@@ -1,8 +1,0 @@
-Monday, June 01, 2020 6:46 PM - User 'user' has logged in
-Monday, June 01, 2020 6:46 PM - ListAllTodoItems
-Monday, June 01, 2020 6:46 PM - Adding item
-Monday, June 01, 2020 6:47 PM - Added item 4: Chasmfiend
-Monday, June 01, 2020 6:47 PM - CompleteItem
-Monday, June 01, 2020 6:47 PM - Selected Item 1
-Monday, June 01, 2020 6:47 PM - SaveChanges
-Monday, June 01, 2020 6:47 PM - User 'user' has logged off

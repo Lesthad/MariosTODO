@@ -1,9 +1,10 @@
-namespace TODOCore.Repository
+namespace MariosTODOApp.Repositories
 {
     using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using System.IO;
+    using Domain;
 
     public class TodoItemRepository : ITodoItemRepository
     {
@@ -18,18 +19,18 @@ namespace TODOCore.Repository
             }
 
             string json = File.ReadAllText(filePath);
-            list = json.Length != 0 ? JsonConvert.DeserializeObject<List<TodoItem>>(json) : new List<TodoItem>();
+            list = json.Length == 0 ? new List<TodoItem>() : JsonConvert.DeserializeObject<List<TodoItem>>(json);
             this.filePath = filePath;
         }
 
-        public IEnumerable<TodoItem> GetAll()
+        public IEnumerable<TodoItem> GetAllByUser(string userId)
         {
-            return list;
+            return list.Where(x => x.UserId == userId);
         }
 
         public TodoItem GetById(int id)
         {
-            return list.FirstOrDefault(x => x.Id.Equals(id));
+            return list.FirstOrDefault(x => x.TodoItemId.Equals(id));
         }
 
         public void Delete(TodoItem modifiedItem)
@@ -37,25 +38,25 @@ namespace TODOCore.Repository
             list.Remove(modifiedItem);
         }
 
-        public void Save(TodoItem item)
+        public void Save(TodoItem modifiedItem)
         {
-            var exisitingItem = GetById(item.Id);
+            var exisitingItem = GetById(modifiedItem.TodoItemId);
 
             if (exisitingItem is null)
             {
-                item.Id =
-                    GetAll()
-                    .Select(x => x.Id)
-                    .OrderBy(x => x) 
+                modifiedItem.TodoItemId =
+                    list
+                    .Select(x => x.TodoItemId)
+                    .OrderBy(x => x)
                     .DefaultIfEmpty(0)
                     .Last() + 1;
 
-                list.Add(item);
+                list.Add(modifiedItem);
             }
             else
             {
-                exisitingItem.IsCompleted = item.IsCompleted;
-                exisitingItem.Description = item.Description;
+                exisitingItem.IsCompleted = modifiedItem.IsCompleted;
+                exisitingItem.Description = modifiedItem.Description;
             }
         }
 

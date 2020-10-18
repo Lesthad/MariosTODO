@@ -1,4 +1,4 @@
-namespace TODOCore.Util
+namespace MariosTODOApp.Loggers
 {
     using System.Collections.Generic;
     
