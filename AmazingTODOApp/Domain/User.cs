@@ -21,7 +21,6 @@ namespace AmazingTODOApp.Domain
             UserId = userId;
             UserName = userName;
             Password = password;
-            TodoItems = new List<TodoItem>();
         }
     }
 }
