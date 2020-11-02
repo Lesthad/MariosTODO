@@ -1,7 +1,7 @@
+using System.Collections.Generic;
+
 namespace AmazingTODOApp.Loggers
 {
-    using System.Collections.Generic;
-    
     public class LoggerController : ILogger
     {
         List<ILogger> Loggers { get; set; }

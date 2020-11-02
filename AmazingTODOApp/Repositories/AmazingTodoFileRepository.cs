@@ -1,12 +1,12 @@
+using AmazingTODOApp.Domain;
+using System.Linq;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+using System.Security.Authentication;
+
 namespace AmazingTODOApp.Repositories
 {
-    using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using System.IO;
-    using Domain;
-    using System.Security.Authentication;
-
     public class AmazingTodoFileRepository : IAmazingTodoRepository
     {
         private readonly List<User> users;

@@ -1,9 +1,9 @@
-﻿namespace AmazingTODOApp.Repositories
-{
-    using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
+﻿using AmazingTODOApp.Domain;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
+namespace AmazingTODOApp.Repositories
+{
     public class AmazingTodoEFContext : DbContext
     {
         public AmazingTodoEFContext()
