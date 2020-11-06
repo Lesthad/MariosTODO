@@ -43,7 +43,7 @@ namespace AmazingTODOApp
                     //----------------------------------------------------------- Authenticating user
                     try
                     {
-                        currentUser = amazingTodoRepository.GetUser(userName, password);
+                        AuthenticateUser(userName, password);
                         Console.Clear();
                         logger.Log(string.Format("User '{0}' has logged in", userName), LoggerLevel.INFO);
                     }
@@ -107,6 +107,12 @@ namespace AmazingTODOApp
 
                 currentUser = null;
             }
+        }
+
+        public User AuthenticateUser(string userName, string password)
+        {
+            currentUser = amazingTodoRepository.GetUser(userName, password);
+            return currentUser;
         }
 
         private void DeleteCompletedItems()

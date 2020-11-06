@@ -37,7 +37,7 @@ namespace AmazingTODOApp.Repositories
         }
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-            dbContextOptionsBuilder.UseSqlServer("Data Source=TDG-MBL-MTY0096;Initial Catalog=AwesomeTODO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            dbContextOptionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=AwesomeTODO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
     }
 }

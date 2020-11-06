@@ -22,7 +22,7 @@ namespace AmazingTODOApp
             serviceCollection
                 .AddDbContext<AmazingTodoEFContext>(options =>
                 {
-                    options.UseSqlServer("Data Source=TDG-MBL-MTY0096;Initial Catalog=AwesomeTODO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                    options.UseSqlServer("Data Source=localhost;Initial Catalog=AwesomeTODO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
                 }
             );
 
