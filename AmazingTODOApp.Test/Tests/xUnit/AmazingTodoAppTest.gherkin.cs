@@ -6,27 +6,28 @@ using Xunit;
 
 namespace AmazingTODOApp.Test.Tests.xUnit
 {
-    public class AmazingTodoAppTest
+    public class AmazingTodoAppTestGherkin
     {
         private AmazingTodoApp amazingTodoapp;
         private ILogger logger;
         private IAmazingTodoRepository amazingTodoRepository;
 
-        public AmazingTodoAppTest()
+        public AmazingTodoAppTestGherkin()
         {
-            //var context = new AmazingTodoEFContext();
-
-            //amazingTodoRepository = new AmazingTodoEFRepository(context);
-            //logger = new ConsoleLogger(LoggerLevel.INFO);
-            //amazingTodoapp = new AmazingTodoApp(amazingTodoRepository, logger);
-
             amazingTodoRepository = A.Fake<IAmazingTodoRepository>();
             logger = new ConsoleLogger(LoggerLevel.INFO);
             amazingTodoapp = new AmazingTodoApp(amazingTodoRepository, logger);
         }
 
+        /// <summary>
+        /// FEATURE: Authenticate Users
+        /// SCENARIO: Valid User login
+        /// GIVEN a valid user input his/her credentials
+        /// WHEN pressing enter
+        /// THEN the user should have access to the main menu
+        /// </summary>
         [Fact]
-        public void ValidateUserCredentials()
+        public void GivenAValidUser_WhenValidated_ThenShouldHaveAccess()
         {
             //Arrenge
             var userName = "miguel";
@@ -49,8 +50,15 @@ namespace AmazingTODOApp.Test.Tests.xUnit
             Assert.Equal(userName, authenticatedUser.UserName);
         }
 
+        /// <summary>
+        /// FEATURE: Authenticate Users
+        /// SCENARIO: Invalid User login
+        /// GIVEN an invalid user input his/her credentials
+        /// WHEN pressing enter
+        /// THEN the user should not have access to the main menu
+        /// </summary>
         [Fact]
-        public void ValidateUserCredentialsDoesNotExist()
+        public void GivenAnInValidUser_WhenValidated_ThenShouldNotHaveAccess()
         {
             //Arrenge
             var userName = "john";
